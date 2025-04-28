@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Основы химии
+{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теоретические материалы</title>
+    <link rel="stylesheet" href="{{url_for( 'static', filename='css/main.css')}}"><!-- Подключите свой CSS файл для стилей -->
+</head>
+<body>
+    <header>
+        <h1>Теоретические материалы</h1>
+        <nav>
+            <ul>
+                <li><a href="#osnovy">Основы химии</a></li>
+                <li><a href="#bezopasnost">Безопасность</a></li>
+                <li><a href="#veshchestva">Описание веществ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="osnovy" class="content-section">
+            <h2>Основы химии</h2>
+            <p>Введение в химию: определение, история и значение науки. <a href="https://www.youtube.com/watch?v=oq3uYteSoxA" class="button">Читать далее</a></p>
+            <p>Основные понятия: атомы, молекулы, элементы, соединения. <a href="https://www.youtube.com/watch?v=wvpKgE-5c8A" class="button">Читать далее</a></p>
+            <p>Законы химии: закон сохранения массы, закон постоянства состава. <a href="https://www.youtube.com/watch?v=DaMLDMGwpig" class="button">Читать далее</a></p>
+            <img src="https://sun9-43.userapi.com/rqyjRpL-zrcdCjIqHRJ7i_xqNKcNST-V6CNh2g/3UA46CZrGtU.jpg" alt="Описание изображения" class="responsive-image">
+        </section>
+
+        <section id="bezopasnost" class="content-section">
+            <h2>Безопасность при проведении экспериментов</h2>
+            <p>Рекомендации по безопасному обращению с химическими веществами. <a href="https://www.youtube.com/watch?v=KRLBwZZy5fw" class="button">Читать далее</a></p>
+            <p>Использование защитного оборудования: перчатки, очки, маски. <a href="https://www.youtube.com/watch?v=YELAr7P8xEs" class="button">Читать далее</a></p>
+            <p>Правила поведения в случае аварийных ситуаций. <a href="https://www.youtube.com/watch?v=GZ1BxsuONDE" class="button">Читать далее</a></p>
+            <img src="https://www.rabochy-put.ru/upload/iblock/2f5/3ggofe1qxzpdrtw6w8pq8t2zf07m8obj/SAES_Vizit-belorusskikh-atomshchikov-_3_.jpg" alt="Описание изображения" class="responsive-image">
+        </section>
+
+        <section id="veshchestva" class="content-section">
+            <h2>Описание используемых веществ и их свойства</h2>
+            <p>Химические вещества: классификация и примеры. <a href="https://www.youtube.com/watch?v=RFjCiS2EMYc" class="button">Читать далее</a></p>
+            <p>Физические и химические свойства веществ: агрегатные состояния, реакционная способность. <a href="https://www.youtube.com/watch?v=k7TpolKgRSM" class="button">Читать далее</a></p>
+            <p>Влияние условий (температура, давление) на реакции. <a href="https://www.youtube.com/watch?v=Mws2JQJ5aIg" class="button">Читать далее</a></p>
+            <img src="https://avatars.mds.yandex.net/i?id=d94402fbeaeacd1444556d45f607815b_l-5234950-images-thumbs&n=13" alt="Описание изображения" class="responsive-image">
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Мой Сайт о Химических Экспериментах</p>
+    </footer>
+</body>
+</html>
+{% endblock %}

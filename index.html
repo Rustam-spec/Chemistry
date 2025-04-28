@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Химия
+{% endblock %}
+
+{% block body %}
+<div class="container text-center">
+    <h1 class="mt-5">Химические эксперименты дома</h1>
+    <p class="lead mt-3">Добро пожаловать в мир увлекательной химии! Здесь вы найдете простые и безопасные эксперименты, которые можно провести дома с использованием обычных материалов. Погрузитесь в удивительный мир науки и откройте для себя магию химических реакций!</p>
+    
+    <div class="image-container mt-4">
+        <img src="{{ url_for('static', filename='img/0_28.jpg') }}" alt="Химические эксперименты" class="img-fluid rounded">
+    </div>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('experiments') }}" class="btn btn-primary">Сделать эксперимент!</a>
+    </div>
+</div>
+
+<style>
+    .image-container {
+        margin: 20px 0;
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+    h1 {
+        color: #2c3e50;
+    }
+    p {
+        color: #34495e;
+        font-size: 1.2em;
+    }
+    .btn-primary {
+        background-color: #3498db;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+</style>
+{% endblock %}

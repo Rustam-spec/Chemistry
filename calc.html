@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Калькулятор соотношений ингредиентов
+{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор соотношений ингредиентов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; /* Убираем отступы */
+            height: 100vh; /* Высота на весь экран */
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение элементов */
+            background-color: #f8f9fa; /* Цвет фона */
+        }
+        .navbar {
+            width: 100%; /* Ширина на весь экран */
+            background-color: #007BFF; /* Цвет фона панели */
+            padding: 10px; /* Отступы */
+            color: white; /* Цвет текста */
+            text-align: center; /* Центрируем текст */
+        }
+        .container {
+            flex: 1; /* Занимает оставшееся пространство */
+            display: flex;
+            justify-content: center; /* Центрируем по горизонтали */
+            align-items: center; /* Центрируем по вертикали */
+        }
+        .calculator {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: white; /* Цвет фона контейнера */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
+            max-width: 400px; /* Максимальная ширина контейнера */
+            width: 100%; /* Ширина контейнера на 100% */
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .add-button {
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #007BFF;
+        }
+        /* Стили для кнопки вопроса */
+        .help-button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .remove-button {
+            background-color: transparent;
+            border: none;
+            color: #dc3545; /* Красный цвет для кнопки удаления */
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px; /* Отступ слева от кнопки */
+        }
+    </style>
+</head>
+<body>
+    <button class="help-button" id="helpBtn">❓</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Как работает калькулятор</h2>
+            <p>Этот калькулятор позволяет вам вводить ингредиенты и рассчитывать их новые количества на основе заданного значения(пропорции). Просто введите количество для первого ингредиента, и калькулятор автоматически пересчитает остальные ингредиенты.</p>
+            <p>Нажмите на кнопку «➕», чтобы добавить больше ингредиентов.</p>
+        </div>
+    </div>
+
+    <script>
+        // Открытие модального окна
+        document.getElementById('helpBtn').onclick = function() {
+            document.getElementById('myModal').style.display = "block";
+        }
+
+        // Закрытие модального окна
+        document.getElementById('closeModal').onclick = function() {
+            document.getElementById('myModal').style.display = "none";
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('myModal')) {
+                document.getElementById('myModal').style.display = "none";
+            }
+        }
+    </script>
+    <div class="navbar">
+        Калькулятор соотношений ингредиентов
+    </div>
+
+    <div class="container">
+        <div class="calculator">
+            <div id="ingredientPanels">
+                <div class="ingredient-panel">
+                    <label for="ingredient1">Ингредиент 1 (грамм):</label>
+                    <input type="number" class="ingredient" value="">
+                </div>
+            </div>
+
+            <label for="newAmount">Новое количество (Для <em>первого</em> ингредиента):</label>
+            <input type="number" id="newAmount" value="">
+
+            <button class="add-button" onclick="addIngredient()">➕</button>
+            <button onclick="calculate()">Рассчитать</button>
+
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function addIngredient() {
+    const ingredientPanels = document.getElementById('ingredientPanels');
+    const newPanel = document.createElement('div');
+    newPanel.classList.add('ingredient-panel');
+    newPanel.style.display = 'flex'; // Используем flexbox для выравнивания
+    newPanel.style.alignItems = 'center'; // Центрируем элементы по вертикали
+    newPanel.innerHTML = `
+        <label style="margin-right: 10px;">Ингредиент ${ingredientPanels.children.length + 1} (грамм):</label>
+        <input type="number" class="ingredient" value="" style="flex: 1; margin-right: 10px;">
+        <button class="remove-button" onclick="removeIngredient(this)">✖</button>
+    `;
+    ingredientPanels.appendChild(newPanel);
+}
+
+function removeIngredient(button) {
+    const ingredientPanel = button.parentElement;
+    ingredientPanel.remove();
+}
+
+        function calculate() {
+            const ingredients = document.querySelectorAll('.ingredient');
+            const newAmount = parseFloat
+            (document.getElementById('newAmount').value);
+
+            let totalIngredients = 0;
+            let newIngredients = [];
+
+            ingredients.forEach(ingredient => {
+                const ingredientValue = parseFloat(ingredient.value);
+                if (!isNaN(ingredientValue)) {
+                    newIngredients.push(ingredientValue);
+                    totalIngredients += ingredientValue;
+                }
+            });
+
+            const ratio1 = newAmount / newIngredients[0];
+            const results = newIngredients.map((ingredient, index) => {
+                return (ingredient * ratio1).toFixed(2);
+            });
+
+            let resultText = 'Новое количество ингредиентов:<br>';
+            results.forEach((result, index) => {
+                resultText += `Ингредиент ${index + 1}: ${result} грамм<br>`;
+            });
+
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+
+</body>
+</html>
+{% endblock %}
