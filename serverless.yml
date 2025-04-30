@@ -1,0 +1,9 @@
+service: my-service
+
+provider:
+  name: aws
+  runtime: python3.12
+
+functions:
+  hello:
+    handler: api/hello.handler
